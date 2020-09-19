@@ -20,21 +20,23 @@ Implement an User Authentication System. Hash user's passwords before saving the
 
 Commit your code regularly and meaningfully. This helps both you (in case you ever need to return to old code for any number of reasons) and your team lead as the evaluate your solution.
 
-## ⏩Interview Questions ⏩⏩⏩⏩⏩⏩⏩⏩⏩⏩⏩⏩⏩⏩⏩
+⏩⏩⏩⏩⏩⏩⏩⏩⏩⏩⏩⏩⏩⏩⏩
+## Interview Questions
 
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. Differences between using _sessions_ or _JSON Web Tokens_ for authentication.
-    ⏩
+    ⏩Sessions are created by the server the first time credentials are sent by the client. Sessions are then sent back to the client, the client sends the session cookie with each request and since it stores validation information, the client will not have to re-send credentials.
+     JSON Web Tokens are used to transmit information. The structure of web tokens allows for data to be encrypted for authentication and includes a encrypted signature string attached. If the data being sent via web token is tampered with, the encoded format of the data will no longer be the same as when it was created, in this way web tokens are secure for transmitting all kinds of information. The data cannot be modified without the original signature string.
 
 2. What does `bcrypt` do to help us store passwords in a secure manner.
-    ⏩
+    ⏩bcrypt hashes pashwords at least one time, usually many times using time complexity, essentially coding the password into a 'mashed' series of letters and numbers. Time complexity rehashes each hash for a designated time period before stopping. This type of hashing is near impossible to hack even with a rainbow table.
 
 3. How are unit tests different from integration and end-to-end testing.
-    ⏩
+    ⏩Unit tests isolate small units of code, testing functions and methods. Integrated testing tests several units to check that they work together correctly. End-to-end testing simulates real user interaction testing an entire application to make sure it functions correctly.
 
 4. How _Test Driven Development_ changes the way we write applications and tests.
-    ⏩
+    ⏩Test driven development causes us to think with the end result in mind, thinking about what we want the function to do, then begin to work with the all the possible assertions we can check to ensure it will function properly. This method tends to bring about the writing of higher quality code.
 
 You are expected to be able to answer questions in these areas. Your responses contribute to your Sprint Challenge grade.
 ⏪⏪⏪⏪⏪⏪⏪⏪⏪⏪⏪⏪⏪⏪⏪⏪⏪⏪⏪⏪
@@ -56,7 +58,7 @@ Your finished project must include all of the following requirements:
 - [✅] An authentication workflow with functionality for account creation and login implemented inside `/auth/auth-router.js`. A `user` has `username` and `password`. Both properties are required.
 - [✅] Middleware used to restrict access to resources for non authenticated requests. Use the file: `./auth/authenticate-middleware.js` as a starting point.
 - [✅] Configuration for running tests using `Jest`.
-- [ ] A **minimum o 2 tests** per API endpoint.
+- [✅] A **minimum o 2 tests** per API endpoint.
 
 **Note**: the database already has the users table, but if you run into issues, the migrations are available.
 
@@ -66,7 +68,7 @@ In your solution, it is essential that you follow best practices and produce cle
 
 After finishing your required elements, you can push your work further. These goals may or may not be things you have learned in this module but they build on the material you just studied. Time allowing, stretch your limits and see if you can deliver on the following optional goals:
 
-- [ ] Write at least 4 tests per endpoint.
+- [✅] Write at least 4 tests per endpoint.
 - [ ] Extract user validation into a separate method and write unit tests for it.
 - [ ] Use a separate testing database for the endpoint tests.
 - [ ] Implement authentication with the other method, if you used JWTs for MVP use sessions for stretch and vice versa.

@@ -35,22 +35,12 @@ describe('jokes integration tests', () => {
                 console.log(res.body)
             }
         }
-
-
-        // expect(res.type).toBe('application/json')
-        // expect(res.body).toBe('')
     });
 
 
     it('GET to /jokes, returns array of jokes', async () => {
         const res = await supertest(server).get('/api/jokes')
-        // expect(res.body).toHaveLength()
         console.log(res.body)
-
-
-
-        // expect(res.statusCode).toBe()
-        // expect(res.type).toBe('application/json')
     });
 
 });
