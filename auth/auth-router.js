@@ -1,11 +1,76 @@
 const router = require('express').Router();
+const bcrypt = require('bcryptjs');
+// const authMiddleware = require('./authenticate-middleware');
+const Users = require('./auth-model');
 
-router.post('/register', (req, res) => {
+
+router.post('/register', async (req, res, next) => {
   // implement registration
+  try {
+    const { username, password } = req.body;
+
+    if (!username) {
+      res.status(401).json({
+        message: 'Username required.'
+      });
+    }
+
+    const user = await Users.findBy({ username }).first()
+
+    if (!password) {
+      res.status(401).json({
+        message: 'Password required.'
+      });
+    }
+
+    if (user) {
+      return res.status(409).json({
+        message: 'Username is already taken.',
+      })
+    }
+
+    const newUser = await Users.add({
+      username,
+      password: await bcrypt.hash(password, 14),
+    })
+
+    res.status(201).json(newUser)
+  }
+
+  catch (err) {
+    next(err)
+  }
+
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res, next) => {
   // implement login
+  try {
+    const { username, password } = req.body;
+    const user = await Users.findBy({ username }).first();
+
+    if (!user) {
+      return res.status(401).json({
+        message: 'Invalid Credentials'
+      });
+    }
+
+    const passwordValid = await bcrypt.compare(password, user.password);
+
+    if (!passwordValid) {
+      return res.status(401).json({
+        message: 'Invalid Password'
+      });
+    }
+    req.session.user = user
+    res.json({
+      message: `Welcome ${user.username}.`
+    });
+  }
+
+  catch (err) {
+    next(err)
+  }
 });
 
 module.exports = router;
