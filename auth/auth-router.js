@@ -54,17 +54,17 @@ router.post('/login', async (req, res, next) => {
         message: 'Invalid Credentials'
       });
     }
-    
+
     const passwordValid = await bcrypt.compare(password, user.password);
 
     if (!passwordValid) {
       return res.status(401).json({
-        message: 'Invalid Credentials'
+        message: 'Invalid Password'
       });
     }
     req.session.user = user
     res.json({
-      message: `Welcome ${user.username}`
+      message: `Welcome ${user.username}.`
     });
   }
 
